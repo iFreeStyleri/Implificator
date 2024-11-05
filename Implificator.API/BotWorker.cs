@@ -37,7 +37,7 @@ namespace Implificator.API
 
         public async Task Echo()
         {
-            await _client.SetWebhookAsync("https://07fc-2a12-5940-5876-00-2.ngrok-free.app/api/update");
+            await _client.SetWebhookAsync("https://0928-85-192-42-30.ngrok-free.app/api/update");
         }
     }
 }
