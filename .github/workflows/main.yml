@@ -46,3 +46,19 @@ jobs:
         key: ${{ secrets.VPS }}
         source: implificator.tar
         target: /home/${{ env.SERVER_ROOT }}/
+        
+    - name: SSH to VPS and deploy
+      uses: appleboy/ssh-action@v0.1.7
+      with:
+        host: ${{ env.SERVER_HOST }}
+        username: ${{ env.SERVER_ROOT }}
+        key: ${{ secrets.VPS }}
+        script: |
+          docker load -i /home/${{ env.SERVER_ROOT }}/implificator.tar
+          if [ "$(docker ps -q -f name=implificator)" ]; then
+            docker stop implificator
+          fi
+          if [ "$(docker ps -a -q -f name=implificator)" ]; then
+            docker rm implificator
+          fi
+          docker run --name implificator -p 5145:8080 -d implificator
