@@ -22,10 +22,10 @@ jobs:
       run: docker save implificator -o implificator.tar
 
     - name: Verify tarball exists
-      run: ls -lh simpleapp.tar
+      run: ls -lh implificator.tar
       
     - name: Change file permissions
-      run: chmod 644 simpleapp.tar
+      run: chmod 644 implificator.tar
       
     - name: SSH to VPS and remove existing tarball
       uses: appleboy/ssh-action@v0.1.7
@@ -34,8 +34,8 @@ jobs:
         username: ${{ env.SERVER_ROOT }}
         key: ${{ secrets.VPS }}
         script: |
-          if [ -f /home/${{ secrets.VPS_USER }}/simpleapp.tar ]; then
-            rm /home/${{ secrets.VPS_USER }}/simpleapp.tar
+          if [ -f /home/${{ secrets.VPS_USER }}/implificator.tar ]; then
+            rm /home/${{ secrets.VPS_USER }}/implificator.tar
           fi
 
     - name: Copy Docker image to VPS
