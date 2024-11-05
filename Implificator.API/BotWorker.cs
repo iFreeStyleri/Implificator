@@ -8,6 +8,7 @@ namespace Implificator.API
     public class BotWorker
     {
         private readonly ITelegramBotClient _client;
+        private readonly IConfiguration _config;
         private List<CommandBase> _commands;
         private List<CallbackBase> _callbacks;
         public IReadOnlyList<CommandBase> Commands
@@ -20,8 +21,9 @@ namespace Implificator.API
             get => _callbacks.AsReadOnly();
         }
 
-        public BotWorker(ITelegramBotClient client)
+        public BotWorker(ITelegramBotClient client, IConfiguration config)
         {
+
             _commands = new()
             {
                 new StartCommand()
@@ -33,11 +35,12 @@ namespace Implificator.API
             };
 
             _client = client;
+            _config = config;
         }
 
         public async Task Echo()
         {
-            await _client.SetWebhookAsync("https://0928-85-192-42-30.ngrok-free.app/api/update");
+            await _client.SetWebhookAsync(_config.GetSection("ngrok-webhook").Value);
         }
     }
 }
