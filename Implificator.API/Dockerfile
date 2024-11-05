@@ -4,7 +4,8 @@ FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
 
 ENV ASPNETCORE_URLS=http://+:5002
-ENV ASPNETCORE_HTTPS_PORT=https://+:5002
+ENV ASPNETCORE_HTTPS_PORT=https://+:5001
+
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["Implificator.API/Implificator.API.csproj", "Implificator.API/"]
