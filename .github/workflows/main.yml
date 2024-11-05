@@ -16,10 +16,10 @@ jobs:
       uses: docker/setup-buildx-action@v2
 
     - name: Build Docker image
-      run: docker build -t simpleapp .
+      run: docker build -t implificator -f Implificator.API/Dockerfile .
     
     - name: Save Docker image as tarball
-      run: docker save simpleapp -o simpleapp.tar
+      run: docker save implificator -o implificator.tar
 
     - name: Verify tarball exists
       run: ls -lh simpleapp.tar
