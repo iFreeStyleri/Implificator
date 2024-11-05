@@ -61,4 +61,4 @@ jobs:
           if [ "$(docker ps -a -q -f name=implificator)" ]; then
             docker rm implificator
           fi
-          docker run --name implificator -p 5145:8080 -d implificator
+          docker run --name implificator -p 5145:5002 -d implificator
