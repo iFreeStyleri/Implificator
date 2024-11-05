@@ -1,0 +1,48 @@
+name: Deploy
+
+on: workflow_dispatch
+
+env:
+  SERVER_HOST: 85.192.42.30
+  SERVER_ROOT: root
+  SERVER_PATH: /root/github-deploy
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Build Docker image
+      run: docker build -t simpleapp .
+    
+    - name: Save Docker image as tarball
+      run: docker save simpleapp -o simpleapp.tar
+
+    - name: Verify tarball exists
+      run: ls -lh simpleapp.tar
+      
+    - name: Change file permissions
+      run: chmod 644 simpleapp.tar
+      
+    - name: SSH to VPS and remove existing tarball
+      uses: appleboy/ssh-action@v0.1.7
+      with:
+        host: ${{ env.SERVER_HOST }}
+        username: ${{ env.SERVER_ROOT }}
+        key: ${{ secrets.VPS }}
+        script: |
+          if [ -f /home/${{ secrets.VPS_USER }}/simpleapp.tar ]; then
+            rm /home/${{ secrets.VPS_USER }}/simpleapp.tar
+          fi
+
+    - name: Copy Docker image to VPS
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ env.SERVER_HOST }}
+        username: ${{ env.SERVER_ROOT }}
+        key: ${{ secrets.VPS }}
+        source: simpleapp.tar
+        target: /home/${{ env.SERVER_ROOT }}/
