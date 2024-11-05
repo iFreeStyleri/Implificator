@@ -20,7 +20,7 @@ namespace Implificator.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var str = _config.GetSection("PostgreSQL").Value;
+            var str = _config.GetSection("PsqlConnection").Value;
             optionsBuilder.UseNpgsql(str);
 
         }
