@@ -16,16 +16,16 @@ jobs:
       uses: docker/setup-buildx-action@v2
 
     - name: Build Docker image
-      run: docker build -t simpleapp .
+      run: docker build -t implificator -f Implificator.API/Dockerfile .
     
     - name: Save Docker image as tarball
-      run: docker save simpleapp -o simpleapp.tar
+      run: docker save implificator -o implificator.tar
 
     - name: Verify tarball exists
-      run: ls -lh simpleapp.tar
+      run: ls -lh implificator.tar
       
     - name: Change file permissions
-      run: chmod 644 simpleapp.tar
+      run: chmod 644 implificator.tar
       
     - name: SSH to VPS and remove existing tarball
       uses: appleboy/ssh-action@v0.1.7
@@ -34,8 +34,8 @@ jobs:
         username: ${{ env.SERVER_ROOT }}
         key: ${{ secrets.VPS }}
         script: |
-          if [ -f /home/${{ secrets.VPS_USER }}/simpleapp.tar ]; then
-            rm /home/${{ secrets.VPS_USER }}/simpleapp.tar
+          if [ -f /home/${{ secrets.VPS_USER }}/implificator.tar ]; then
+            rm /home/${{ secrets.VPS_USER }}/implificator.tar
           fi
 
     - name: Copy Docker image to VPS
@@ -44,5 +44,21 @@ jobs:
         host: ${{ env.SERVER_HOST }}
         username: ${{ env.SERVER_ROOT }}
         key: ${{ secrets.VPS }}
-        source: simpleapp.tar
+        source: implificator.tar
         target: /home/${{ env.SERVER_ROOT }}/
+        
+    - name: SSH to VPS and deploy
+      uses: appleboy/ssh-action@v0.1.7
+      with:
+        host: ${{ env.SERVER_HOST }}
+        username: ${{ env.SERVER_ROOT }}
+        key: ${{ secrets.VPS }}
+        script: |
+          docker load -i /home/${{ env.SERVER_ROOT }}/implificator.tar
+          if [ "$(docker ps -q -f name=implificator)" ]; then
+            docker stop implificator
+          fi
+          if [ "$(docker ps -a -q -f name=implificator)" ]; then
+            docker rm implificator
+          fi
+          docker run --name implificator -p 5145:8080 -d implificator
