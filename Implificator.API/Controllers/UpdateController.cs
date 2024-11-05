@@ -42,5 +42,11 @@ namespace Implificator.API.Controllers
             }
             return Ok();
         }
+
+        [HttpGet("check")]
+        public IActionResult Check()
+        {
+            return Ok("Start");
+        }
     }
 }
