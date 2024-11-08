@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  backend:
+    image: ${DOCKER_REGISTRY-}implificatorapi
+    build:
+      context: .
+      dockerfile: Implificator.API/Dockerfile
+  proxy:
+    image: nginx:mainline

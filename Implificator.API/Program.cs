@@ -1,4 +1,5 @@
 using Implificator.API;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.DependencyInjection;
 using Telegram.Bot;
 
@@ -14,6 +15,8 @@ var app = builder.Build();
 _ = app.Services.GetRequiredService<BotWorker>().Echo();
 // Configure the HTTP request pipeline.
 
+app.UseForwardedHeaders(new ForwardedHeadersOptions()
+    {ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto});
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
