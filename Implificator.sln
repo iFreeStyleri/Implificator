@@ -12,6 +12,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Implificator.DAL", "Implifi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Implificator.API", "Implificator.API\Implificator.API.csproj", "{38FBF21A-DDC8-4663-B468-3AF6438E260C}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{D8B90C66-CD63-415D-AF37-47322D88FF7F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,10 @@ Global
 		{38FBF21A-DDC8-4663-B468-3AF6438E260C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38FBF21A-DDC8-4663-B468-3AF6438E260C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38FBF21A-DDC8-4663-B468-3AF6438E260C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8B90C66-CD63-415D-AF37-47322D88FF7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8B90C66-CD63-415D-AF37-47322D88FF7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8B90C66-CD63-415D-AF37-47322D88FF7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8B90C66-CD63-415D-AF37-47322D88FF7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
