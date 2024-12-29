@@ -12,6 +12,7 @@ namespace Implificator.DAL
         private readonly IConfiguration _config;
         public DbSet<User> Users => Set<User>();
         public DbSet<VIP> VIPs => Set<VIP>();
+        public DbSet<QRMessage> QRMessages => Set<QRMessage>();
         public UserContext(IConfiguration config)
         {
             _config = config;
@@ -20,7 +21,7 @@ namespace Implificator.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var str = _config.GetSection("PsqlConnection").Value;
+            var str = _config.GetConnectionString("PsqlConnection");
             optionsBuilder.UseNpgsql(str);
 
         }

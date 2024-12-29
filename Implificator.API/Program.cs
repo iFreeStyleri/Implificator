@@ -1,25 +1,41 @@
+using Implificator.Abstractions.Services;
 using Implificator.API;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.DependencyInjection;
 using Telegram.Bot;
+using Implificator.API.Implementations;
+using Implificator.API.Implementations.Services;
+using Implificator.DAL.DI;
 
-var builder = WebApplication.CreateBuilder(args);
+public static class Program
+{
+    public static WebApplication App { get; private set; }
+    public static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
+        // Add services to the container.
+        var services = builder.Services;
+        builder.Services.AddControllers().AddNewtonsoftJson();
+        services.AddSingleton<ITelegramBotClient, TelegramBotClient>(
+            _ => new TelegramBotClient(builder.Configuration.GetSection("TgToken").Value));
+        services.AddSingleton<BotWorker>();
+        services.AddSingleton<ITelegraphService, TelegraphService>(services => TelegraphService.Create());
+        services.ConfigureDAL(builder.Configuration);
+        services.AddMemoryCache();
+        services.AddTransient<IQRStateService, QRStateService>();
+        services.AddTransient<IQRService, QRService>();
 
-// Add services to the container.
+        var app = builder.Build();
+        // Configure the HTTP request pipeline.
+        App = app;
+        app.UseForwardedHeaders(new ForwardedHeadersOptions
+            { ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto });
+        app.UseHttpsRedirection();
 
-builder.Services.AddControllers().AddNewtonsoftJson();
-builder.Services.AddSingleton<ITelegramBotClient, TelegramBotClient>(
-    services => new TelegramBotClient(builder.Configuration.GetSection("TgToken").Value));
-builder.Services.AddSingleton<BotWorker>();
-var app = builder.Build();
-_ = app.Services.GetRequiredService<BotWorker>().Echo();
-// Configure the HTTP request pipeline.
+        app.UseAuthorization();
 
-app.UseForwardedHeaders(new ForwardedHeadersOptions()
-    {ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto});
-app.UseHttpsRedirection();
+        app.MapControllers();
+        app.Run();
+    }
+}
 
-app.UseAuthorization();
-
-app.MapControllers();
-app.Run();

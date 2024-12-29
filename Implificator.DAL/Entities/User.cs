@@ -14,6 +14,7 @@ namespace Implificator.DAL.Entities
         public long TgId { get; set; }
         public uint CountSubscribe { get; set; }
         public uint CountMail { get; set; }
+        public bool IsBlocked { get; set; }
 
         public List<VIP> VIP { get; set; }
     }

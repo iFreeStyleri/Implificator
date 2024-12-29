@@ -3,9 +3,8 @@
 FROM mcr.microsoft.com/dotnet/aspnet:7.0-alpine AS base
 WORKDIR /app
 
-EXPOSE 80
-EXPOSE 443
-EXPOSE 8080
+EXPOSE 5002
+EXPOSE 5001
 
 ENV ASPNETCORE_URLS=http://+:5002
 ENV ASPNETCORE_HTTPS_PORT=https://+:5001

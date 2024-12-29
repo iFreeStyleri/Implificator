@@ -15,8 +15,6 @@ namespace Implificator.DAL.DI
         public static IServiceCollection ConfigureDAL(this IServiceCollection services, IConfiguration config)
         {
             services.AddDbContext<UserContext>(ServiceLifetime.Transient);
-            services.AddTransient<IBaseRepository<User>, BaseRepository<User>>();
-            services.AddTransient<IBaseRepository<VIP>, BaseRepository<VIP>>();
             return services;
         }
     }
