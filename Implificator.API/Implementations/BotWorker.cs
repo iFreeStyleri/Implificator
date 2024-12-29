@@ -52,13 +52,13 @@ namespace Implificator.API
             };
             _client = client;
             _stateService = stateService;
+            _ = Echo();
         }
 
         public async Task Echo()
         { 
             await _client.DeleteWebhook();
             await _client.SetWebhook("https://qr-stats.ru/api/update");
-            await Task.Delay(-1);
         }
     }
 }
