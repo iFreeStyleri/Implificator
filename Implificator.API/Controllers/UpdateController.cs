@@ -37,7 +37,6 @@ namespace Implificator.API.Controllers
                             if (command != null)
                             {
                                 await command.Execute(_client, update);
-                                return Ok();
                             }
                         }
                         else if (update.Message.Type == MessageType.UsersShared)
@@ -47,7 +46,6 @@ namespace Implificator.API.Controllers
                             if (contactCommand != null)
                             {
                                 await contactCommand.Execute(_client, update);
-                                return Ok();
                             }
                         }
                         if (userData != null)
