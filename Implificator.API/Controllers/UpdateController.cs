@@ -23,7 +23,7 @@ namespace Implificator.API.Controllers
             _stateService = stateService;
         }
         [HttpPost]
-        public async Task<IActionResult> CheckUpdate([FromBody] Update update)
+        public async Task CheckUpdate([FromBody] Update update)
         {
             try
             {
@@ -75,7 +75,6 @@ namespace Implificator.API.Controllers
                 await Console.Out.WriteLineAsync(ex.ToString());
             }
 
-            return Ok();
         }
 
         [HttpGet("check")]
