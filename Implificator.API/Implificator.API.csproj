@@ -15,6 +15,9 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.1" />
     <PackageReference Include="Oscore.QrCodes" Version="1.1.0" />
     <PackageReference Include="Oscore.QrCodes.SkiaSharp" Version="1.1.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="7.2.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="7.2.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="7.2.0" />
     <PackageReference Include="Telegram.Bot" Version="22.2.0" />
   </ItemGroup>
 
